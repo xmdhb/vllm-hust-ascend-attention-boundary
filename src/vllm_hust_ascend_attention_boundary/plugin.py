@@ -13,10 +13,10 @@ from typing import Any
 
 from . import boundary
 
-ENABLE_ENV = "VLLM_HUST_OP01_ASCEND_ATTENTION_BOUNDARY_ENABLE"
-KILL_SWITCH_ENV = "VLLM_HUST_OP01_ASCEND_ATTENTION_BOUNDARY_KILL_SWITCH"
-EVIDENCE_ENV = "VLLM_HUST_OP01_ASCEND_ATTENTION_BOUNDARY_EVIDENCE"
-PATCH_MARKER = "__vllm_hust_op01_ascend_attention_boundary__"
+ENABLE_ENV = "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_ENABLE"
+KILL_SWITCH_ENV = "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_KILL_SWITCH"
+EVIDENCE_ENV = "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_EVIDENCE"
+PATCH_MARKER = "__vllm_hust_ascend_attention_boundary__"
 _seen: set[str] = set()
 _lock = threading.Lock()
 
@@ -55,14 +55,14 @@ def _replace(old: Callable[..., Any], new: Callable[..., Any]) -> None:
 def _check_host(module: Any) -> None:
     function = getattr(module, "split_decodes_and_prefills", None)
     if not callable(function):
-        raise RuntimeError("OP01 Ascend boundary host function is missing")
+        raise RuntimeError("Ascend boundary host function is missing")
     if getattr(function, PATCH_MARKER, False):
         return
     source = inspect.getsource(function)
     if "is_prefill" not in source or (
         "argmax" not in source and "_find_first_true_boundary" not in source
     ):
-        raise RuntimeError("OP01 Ascend boundary host source does not match")
+        raise RuntimeError("Ascend boundary host source does not match")
 
 
 def register() -> None:
@@ -70,7 +70,7 @@ def register() -> None:
         return
     version = importlib.metadata.version("vllm")
     if not version.startswith("0.23."):
-        raise RuntimeError(f"OP01 Ascend boundary requires vLLM 0.23.x, got {version}")
+        raise RuntimeError(f"Ascend boundary requires vLLM 0.23.x, got {version}")
     ascend = importlib.import_module("vllm_ascend.attention.utils")
     _check_host(ascend)
     boundary.install(ascend, _replace, _evidence, PATCH_MARKER)

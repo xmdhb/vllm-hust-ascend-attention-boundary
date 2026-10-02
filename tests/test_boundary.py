@@ -1,6 +1,6 @@
 import torch
 
-from vllm_hust_op01_ascend_attention_boundary.boundary import find_first_true_boundary
+from vllm_hust_ascend_attention_boundary.boundary import find_first_true_boundary
 
 
 def test_find_first_true_boundary():

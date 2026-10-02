@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.2-experimental",
+  "extension_id": "org.vllm-hust.ascend-attention-boundary",
+  "extension_version": "0.1.0.dev0",
+  "kind": "in_process_plugin",
+  "host": {
+    "provider": "vllm",
+    "name": "vllm",
+    "version_range": ">=0.23,<0.24"
+  },
+  "runtime": {
+    "type": "python",
+    "process_scope": "vllm-processes",
+    "isolation": "trusted_in_process"
+  },
+  "lifecycle_owner": "vllm",
+  "protocols": [
+    {"name": "vllm.general_plugins", "version_range": null}
+  ],
+  "implementation": [
+    {
+      "type": "python_entry_point",
+      "group": "vllm.general_plugins",
+      "name": "ascend_attention_boundary"
+    }
+  ],
+  "requires_services": [],
+  "components": [],
+  "activation": {
+    "entry_points": [
+      {"group": "vllm.general_plugins", "name": "ascend_attention_boundary"}
+    ],
+    "environment": {
+      "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_ENABLE": "0",
+      "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_KILL_SWITCH": "0",
+      "VLLM_HUST_ASCEND_ATTENTION_BOUNDARY_EVIDENCE": "0"
+    },
+    "additional_config": {
+      "feature_id": "OP01",
+      "feature_slug": "ascend-attention-boundary",
+      "legacy_feature_name": "Ascend #9 attention boundary search",
+      "admission_status": "ported_cpu_validated_npu_smoke_runtime_blocked",
+      "source_ascend": "e18643f8a4d5bd9990727654318ad069ea0b56e2",
+      "adapted_host_ascend": "5cb98caaadeff42b5b62b996e34bb2aaa29d20fd",
+      "evidence_ids": []
+    }
+  }
+}
