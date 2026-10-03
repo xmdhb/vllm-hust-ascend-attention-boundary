@@ -39,9 +39,19 @@
       "feature_id": "OP01",
       "feature_slug": "ascend-attention-boundary",
       "legacy_feature_name": "Ascend #9 attention boundary search",
-      "admission_status": "ported_cpu_validated_npu_smoke_runtime_blocked",
+      "admission_status": "ported_cpu_validated_host_abi_runtime_pending",
       "source_ascend": "e18643f8a4d5bd9990727654318ad069ea0b56e2",
-      "adapted_host_ascend": "5cb98caaadeff42b5b62b996e34bb2aaa29d20fd",
+      "adapted_host_ascend": "1cdb8c4db6e50f36f1fb3283b3e3dd618f6821e8",
+      "supported_host_ascend_commits": [
+        "1cdb8c4db6e50f36f1fb3283b3e3dd618f6821e8"
+      ],
+      "host_function": "vllm_ascend.attention.utils:split_decodes_and_prefills",
+      "host_parameter_names": [
+        "common_attn_metadata",
+        "decode_threshold",
+        "require_uniform",
+        "treat_short_extends_as_decodes"
+      ],
       "evidence_ids": []
     }
   }
